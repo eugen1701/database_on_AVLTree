@@ -1,5 +1,5 @@
 import random
-
+import time
 class Player:
     def __init__(self, username, score=0):
         self.username = username
@@ -185,14 +185,19 @@ class Game:
         Input: -
         Output: -
         '''
+        print("Discard the last 10 players:")
+        time.sleep(4)
         index = 0
         while index < 10:
             min_score_node = getMinValueNode(self.database)
             player_to_exclude = min_score_node.players[0]
-            print()
+            print(player_to_exclude.username + "has been eliminated from the game having the score: " + str(player_to_exclude.score))
+
             root = deleteAVL(self.database, player_to_exclude)
             self.database = root
             index += 1
+        print('\n')
+        print('\n')
     def round(self):
         '''
         Here we simulate a game, we take which node by deleteind it, put it temporarily in a list, meanwhile we
@@ -200,6 +205,7 @@ class Game:
         Input: -
         Output: -
         '''
+
         players_list = [] #there we are going to put the players while we are attribuiting the scores to them
         self.rounds+=1
         players_list = reverseInOrder(self.database, players_list)
@@ -223,7 +229,13 @@ class Game:
         Input: -
         Output: -
         '''
+        print('\n')
+        print('\n')
+        print('\n---------Now we start the competition---------')
         for i in range(11):
+            print("\n")
+            print("\nRound "+str(i)+" started.")
+
             self.round()
             if self.rounds>2:
                 self.ranking()
@@ -246,20 +258,25 @@ class Game:
         Input: -
         Output: -
         '''
+        print("Now we are initialazing the database with 100 players. \nAll of them have score 0.")
+        time.sleep(4)
         for i in range(1,101):
             username = "Player"+str(i)
             player = Player(username)
             root = insertAVL(self.database, player)
             self.database = root
         #after seting the database with player we can start the competition
+        print("Now we have the database set up.\n We can see that there is just one node with 100 players in it because all have the same score, 0.")
+        print("Root:\nNumber of player:" + str(len(self.database.players))+ "\nThe score of the players" + str(self.database.players[0].score))
+        time.sleep(4)
         self.competition()
         self.podium()
 
 
 
-tree = None
-game = Game(tree)
-game.start()
+# tree = None
+# game = Game(tree)
+# game.start()
 
 def test_delete_insert():
     root = Node()
@@ -323,7 +340,7 @@ def test_balanced():
     root = insertAVL(root, player4)
     print(str(root.height))
 
-#test_balanced()
+
 
 def test_setHeight():
     root = Node()
@@ -335,6 +352,6 @@ def test_setHeight():
     root.left.left = node2
     print(setHeight(root))
     mama = 1
-#test_setHeight()
+
 
 
